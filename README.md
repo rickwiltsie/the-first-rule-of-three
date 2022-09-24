@@ -10,6 +10,7 @@ Code for the presentation 'The First Rule of Three'.
 
 [1-livewire-controller.md](1-livewire-controller.md)
 
+
 ## The Second Project
 ### How can we clean this?
 
@@ -17,9 +18,9 @@ Code for the presentation 'The First Rule of Three'.
 
 [2-alpinejs-controller.md](2-alpinejs-controller.md)
 
+
 ## The Third Project
 ### How can we extract this?
 
 [3-html.md](3-html.md)
-
 [3-alpinejs-component.md](3-alpinejs-component.md)
