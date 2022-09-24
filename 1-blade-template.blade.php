@@ -1,4 +1,3 @@
-```html
 <div x-data
   x-on:drop.prevent="event.dataTransfer.getData('documentUuid') != '' ? $wire.rowDrop(event.dataTransfer.getData('documentUuid')) : ''"
   x-on:dragover.prevent=""
@@ -16,4 +15,3 @@
       </table>
   </div>
 </div>
-```

@@ -6,19 +6,19 @@ Code for the presentation 'The First Rule of Three'.
 ## The First Project
 ### How do we do this?
 
-- [1-blade-template.md](1-blade-template.md)
-- [1-livewire-controller.md](1-livewire-controller.md)
+- [1-blade-template.blade.php](1-blade-template.blade.php)
+- [1-livewire-controller.php](1-livewire-controller.php)
 
 
 ## The Second Project
 ### How can we clean this?
 
-- [2-blade-template.md](2-blade-template.md)
-- [2-alpinejs-controller.md](2-alpinejs-controller.md)
+- [2-blade-template.blade.php](2-blade-template.php)
+- [2-alpinejs-controller.js](2-alpinejs-controller.js)
 
 
 ## The Third Project
 ### How can we extract this?
 
-- [3-html.md](3-html.md)
-- [3-alpinejs-component.md](3-alpinejs-component.md)
+- [3-html.html](3-html.html)
+- [3-alpinejs-component.js](3-alpinejs-component.js)
