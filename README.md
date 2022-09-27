@@ -13,7 +13,7 @@ Code for the presentation 'The First Rule of Three'.
 ## The Second Project
 ### How can we clean this?
 
-- [2-blade-template.blade.php](2-blade-template.php)
+- [2-blade-template.blade.php](2-blade-template.blade.php)
 - [2-alpinejs-controller.js](2-alpinejs-controller.js)
 
 
