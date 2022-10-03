@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Drag Drop Demo</title>
+
+    <style>
+        body {
+            font-family: 'Trebuchet MS', sans-serif;
+        }
+        .demo {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+        }
+        .container {
+            margin: 10px 10px;
+            padding: 5px;
+            flex: 1 1 0px;
+            border-radius: 15px;
+            background-color: #d8eefe;
+        }
+        .wrapper {
+            position: relative;
+            margin-bottom: 6px;
+            background-color: #fffffe;
+            border-radius: 10px;
+        }
+        .wrapper:last-child { margin-bottom: 0; }
+        h3 {
+            margin: 0;
+            flex-grow: 1;
+            padding: 10px;
+            font-size: 18px;
+            color: #094067;
+        }
+        .handle {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            display: block;
+            padding: 0px 4px 4px 4px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 18px;
+            background-color: #3da9fc;
+            color: #fffffe;
+            cursor: move;
+        }
+        p {
+            margin: 0;
+            padding: 0 10px 10px 10px;
+            color: #5f6c7b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="demo" x-data="dragDrop({
+        onDropCallback: (dragEl, endDragEl, containerEl, hoverTopHalf) => {
+            console.log(dragEl, endDragEl, containerEl, hoverTopHalf);
+        }
+    })">
+        <div x-bind="dropContainer()" class="container">
+            <div x-bind="dragWrapper()" class="wrapper">
+                <h3>Drag This</h3>
+                <div x-bind="dragHandle()" class="handle">:::</div>
+                <p>To drag this card, use the handle at the top right.</p>
+            </div>
+
+            <div x-bind="dragWrapper()" class="wrapper">
+                <h3>Targets</h3>
+                <div x-bind="dragHandle()" class="handle">:::</div>
+                <p>You have a few options when dragging a card. You can move it above, or below another card. It can also be put inside an empty container.</p>
+            </div>
+
+            <div x-bind="dragWrapper()" class="wrapper">
+                <h3>Sample of Long Text</h3>
+                <div x-bind="dragHandle()" class="handle">:::</div>
+                <p>Content Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa nam quidem sunt! Dicta ex excepturi id magnam neque officia omnis quam quis similique tenetur. Illum laboriosam non provident tenetur voluptatum.<br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab alias eius illo libero nesciunt odio rem ut voluptatem. Beatae culpa ex explicabo iure, nam necessitatibus obcaecati quo rerum tempore ullam!</p>
+            </div>
+        </div>
+        <div x-bind="dropContainer()" class="container">
+            <div x-bind="dragWrapper()" class="wrapper">
+                <h3>Above or Below</h3>
+                <div x-bind="dragHandle()" class="handle">:::</div>
+                <p>Drag another card to the top half of this card to place it above...
+                <br><br>... or drag it to the bottom half to place below.</p>
+            </div>
+        </div>
+        <div x-bind="dropContainer()" class="container"></div>
+    </div>
+    
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script>
+        function dragDrop(config) {
+            return {
+                config: {
+                    onDropCallback: null,
+                },
+
+                dragEl: null, // the dragged element
+                dragTargetEl: null, // the target that is currently dragged over
+                hoverTopHalf: null, // if the mouse is hovering over the top half of the drag target
+                containerEl: null, // the container that is currently dragged over
+                handleSelected: false, // if the drag handle is held
+
+                init() {
+                    this.config = {
+                        ...this.config,
+                        ...config,
+                    }
+                },
+
+                // x-bind
+                dropContainer() {
+                    return {
+                        ['x-on:drop.stop.prevent'](event) {
+                            this.endDrag(event, null, this.$el)
+                        },
+                        ['x-on:dragover.stop.prevent'](event) {
+                            this.showContainerPreview(event, this.$el);
+                        },
+                        ['x-on:dragleave.stop.prevent'](event) {
+                            this.containerEl = null;
+                        }
+                    }
+                },
+
+                // x-bind
+                dragHandle() {
+                    return {
+                        ['x-on:mousedown']() {
+                            this.dragHandleDown();
+                        },
+                    }
+                },
+
+                // x-bind
+                dragWrapper() {
+                    return {
+                        [':draggable']() {
+                            return 'true';
+                        },
+                        ['x-on:dragstart.self'](event) {
+                            this.startDrag(event, this.$el);
+                        },
+                        ['x-on:drop.stop.prevent'](event) {
+                            this.endDrag(event, this.$el);
+                        },
+                        ['x-on:dragover.stop.prevent'](event) {
+                            this.showWrapperPreview(event, this.$el);
+                        },
+                        ['x-on:dragleave.stop.prevent'](event) {
+                            this.hideDrag(event, this.$el);
+                        },
+                    }
+                },
+
+                resetDrag() {
+                    this.dragEl = null;
+                    this.dragTargetEl = null;
+                    this.hoverTopHalf = null;
+                    this.containerEl = null;
+                    this.handleSelected = false;
+                },
+
+                dragHandleDown() {
+                    this.handleSelected = true;
+                },
+
+                startDrag(event, startEl) {
+                    if (!this.handleSelected) {
+                        event.preventDefault();
+                        return;
+                    }
+
+                    this.resetDrag();
+
+                    this.dragEl = startEl;
+                },
+
+                endDrag(event, endEl, containerEl = null) {
+                    if (endEl !== this.dragEl) {
+                        this.saveDrag(endEl, containerEl);
+                    }
+
+                    this.resetDrag();
+                },
+
+                showWrapperPreview(event, dragTargetEl) {
+
+                    // determine hover position
+                    let mouseY = event.clientY;
+                    let top = dragTargetEl.getBoundingClientRect().top;
+                    let middle = top + dragTargetEl.getBoundingClientRect().height / 2;
+
+                    let hoverTopHalf = null;
+                    if (mouseY > top && mouseY < middle) {
+                        hoverTopHalf = true;
+                    } else {
+                        hoverTopHalf = false;
+                    }
+
+                    if (this.dragTargetEl != dragTargetEl || this.hoverTopHalf != hoverTopHalf) {
+                        this.dragTargetEl = dragTargetEl;
+                        this.hoverTopHalf = hoverTopHalf;
+
+                        if (hoverTopHalf) {
+                            this.dragTargetEl.before(this.dragEl);
+                        } else {
+                            this.dragTargetEl.after(this.dragEl);
+                        }
+                    }
+                },
+
+                showContainerPreview(event, containerEl) {
+                    this.containerEl = containerEl;
+
+                    if (this.containerEl.childElementCount === 0) {
+                        this.containerEl.append(this.dragEl);
+                    }
+                },
+
+                hideDrag(event, hideEl) {
+                    if (this.dragTargetEl === hideEl) {
+                        this.dragTargetEl = null;
+                    }
+                },
+
+                saveDrag(endDragEl, containerEl) {
+                    if (this.config.onDropCallback !== null) {
+                        this.config.onDropCallback(this.dragEl, endDragEl, containerEl, this.hoverTopHalf);
+                    }
+                },
+            }
+        }
+    </script>
+</body>
+</html>
