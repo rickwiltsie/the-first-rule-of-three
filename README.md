@@ -1,24 +1,19 @@
-# drag-drop-dev-process
-Code for the presentation 'The First Rule of Three'.
-
 [Github Repo](https://github.com/rickwiltsie/the-first-rule-of-three)
 
+[Demo](demo.html)
+
+[Component](drag-drop.js)
+
 ## The First Project
-### How do we do this?
-
-- [1-blade-template.blade.php](1-blade-template.blade.php)
-- [1-livewire-controller.php](1-livewire-controller.php)
+- [1-blade-template.blade.php](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/1-blade-template.blade.php)
+- [1-livewire-controller.php](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/1-livewire-controller.php)
 
 
-## The Second Project
-### How can we clean this?
-
-- [2-blade-template.blade.php](2-blade-template.blade.php)
-- [2-alpinejs-controller.js](2-alpinejs-controller.js)
+## Second Project
+- [2-blade-template.blade.php](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/2-blade-template.blade.php)
+- [2-alpinejs-controller.js](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/2-alpinejs-controller.js)
 
 
-## The Third Project
-### How can we extract this?
-
-- [3-html.html](3-html.html)
-- [3-alpinejs-component.js](3-alpinejs-component.js)
+## Third Project
+- [3-html.html](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/3-html.html)
+- [3-alpinejs-component.js](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/3-alpinejs-component.js)
