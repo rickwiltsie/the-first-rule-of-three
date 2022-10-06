@@ -15,5 +15,5 @@
 
 
 ## Third Project
-- [3-html.html](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/3-html.html)
+- [3-blade-template.blade.php](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/3-blade-template.blade.php)
 - [3-alpinejs-component.js](https://github.com/rickwiltsie/the-first-rule-of-three/blob/main/3-alpinejs-component.js)
